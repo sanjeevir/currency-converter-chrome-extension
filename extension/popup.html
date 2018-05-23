@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+    <style>
+        td {
+            white-space: nowrap;
+        }
+    </style>
+    <title>Currency Converter</title>
+    <script src="libs/jquery-3.3.1.min.js"></script>
+    <script src="libs/axios.min.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/popup.js"></script>
+</head>
+
+<body>
+    <!-- TODO: Delete the ugly table and build with CSS -->
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p>Base Currency</p>
+                </td>
+                <td>
+                    <select class="currencies-list" id="default-currency"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="currencies-list" id="from-currency"></select>
+                </td>
+                <td><p>to</p></td>
+                <td>
+                    <select class="currencies-list" id="to-currency"></select>
+                </td>
+                <td><p>=</p></td>
+                <td>
+                    <p id="result">???</p>
+                </td>
+                <td>
+                    <a href="#">+ add line</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="convert">Convert!</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- TODO: Delete the ugly table and build with CSS -->
+</body>
+</html>
