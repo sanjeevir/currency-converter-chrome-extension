@@ -3,8 +3,36 @@
 
 <head>
     <style>
-        td {
-            white-space: nowrap;
+        .disabled {
+            opacity: 0.5;
+            pointer-events:none;
+        }
+
+        .container {
+            min-width: 350px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .container h5 {
+            margin: -10px -10px 0;
+            padding: 5px;
+            line-height: 2em;
+            text-align: center;
+            color: white;
+            background-color: tomato;
+        }
+
+        .container .label {
+            display: inline-block;
+            width: 50%;
+        }
+
+        .container select {
+            width: 40%;
+            height: 25px;
         }
     </style>
     <title>Currency Converter</title>
@@ -15,40 +43,34 @@
 </head>
 
 <body>
-    <!-- TODO: Delete the ugly table and build with CSS -->
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    <p>Base Currency</p>
-                </td>
-                <td>
-                    <select class="currencies-list" id="default-currency"></select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <select class="currencies-list" id="from-currency"></select>
-                </td>
-                <td><p>to</p></td>
-                <td>
-                    <select class="currencies-list" id="to-currency"></select>
-                </td>
-                <td><p>=</p></td>
-                <td>
-                    <p id="result">???</p>
-                </td>
-                <td>
-                    <a href="#">+ add line</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button id="convert">Convert!</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- TODO: Delete the ugly table and build with CSS -->
+
+    <div>
+        <section class="container disabled">
+            <h5>Defaults</h5>
+            <div>
+                <p class="label">Base Currency</p>
+                <select class="currencies-list" id="base-currency"></select>
+            </div>
+            <div>
+                <p class="label">Badge target</p>
+                <select class="currencies-list" id="badge-target"></select>
+            </div>
+            <p>*this section is disabled for now. Badge defaulted to AUD to INR.</p>
+        </section>
+        <section class="container">
+            <h5>Converter</h5>
+            <select class="currencies-list" id="from-currency"></select>
+            <span>to</span>
+            <select class="currencies-list" id="to-currency"></select>
+            <span>=</span>
+            <span id="result">???</span>
+            <span>
+                <a herf="#">-</a>
+                <a herf="#">+</a>
+            </span>
+            <p>*this section is being stylized yet. Look out for quick updates.</p>
+        </section>
+    </div>
+
 </body>
 </html>

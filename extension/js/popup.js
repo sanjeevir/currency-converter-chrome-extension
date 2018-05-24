@@ -5,6 +5,12 @@ $(document).ready(function() {
             var thisCurrency = document.createElement('option');
             thisCurrency.value = CURRENCIES[i];
             thisCurrency.innerText = CURRENCIES[i];
+            //TODO Temp default selection. Change to read from storage.
+            if(currenciesListElement[j].id == 'base-currency' && CURRENCIES[i] === 'AUD') {
+                thisCurrency.selected = true;
+            } else if (currenciesListElement[j].id == 'badge-target' && CURRENCIES[i] === 'INR') {
+                thisCurrency.selected = true;
+            }
             currenciesListElement[j].append(thisCurrency);
         }
     }
@@ -22,5 +28,8 @@ $(document).ready(function() {
         } else {
             $('#result').text("1");
         }
-    })
+    });
 });
+
+var backgroundPage = chrome.extension.getBackgroundPage();
+backgroundPage.UpdateBadge();

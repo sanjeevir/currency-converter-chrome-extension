@@ -18,7 +18,8 @@
     "scripts": [
       "libs/axios.min.js",
       "js/background.js"
-    ]
+    ],
+    "persistent": false
   },
   "permissions":["*://*/*", "<all_urls>"]
 }

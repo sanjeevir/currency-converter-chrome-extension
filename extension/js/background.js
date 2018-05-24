@@ -1,4 +1,4 @@
-chrome.browserAction.setBadgeText({ 'text': '?'});
+chrome.browserAction.setBadgeText({ 'text': '?' });
 chrome.browserAction.setBadgeBackgroundColor({ 'color': "gray" });
 
 let BGCOLORS = [
@@ -15,21 +15,24 @@ function round(value, precision) {
 }
 
 function UpdateBadge() {
+    chrome.browserAction.setBadgeText({ 'text': '?' });
     axios.get('https://free.currencyconverterapi.com/api/v5/convert?q=AUD_INR&compact=ultra')
     .then(function (response) {
         console.log(response);
-        chrome.browserAction.setBadgeText({ 'text': round(response.data.AUD_INR, 2).toString()});
+        chrome.browserAction.setBadgeText({ 'text': round(response.data.AUD_INR, 2).toString() });
+        let color = BGCOLORS[Math.floor((Math.random() * (5 - 0)))];
+        chrome.browserAction.setBadgeBackgroundColor({ 'color': color });
     }).catch(function (error) {
         console.log(error);
     });
 }
 
-chrome.browserAction.onClicked.addListener(function(tab) { 
+/* chrome.browserAction.onClicked.addListener(function(tab) { 
     console.log(Math.floor(Math.random() * (5 - 0)));
     let color = BGCOLORS[Math.floor((Math.random() * (5 - 0)))];
     chrome.browserAction.setBadgeBackgroundColor({ 'color': color });
     UpdateBadge();
-});
+}); */
 
 setInterval(UpdateBadge, 30 * 60 * 1000);
 
