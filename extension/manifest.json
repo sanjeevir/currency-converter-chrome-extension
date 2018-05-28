@@ -1,6 +1,6 @@
 {
   "name": "Currency Converter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Chrome extension with quick view badge for currency conversion(s). Open source.",
   "homepage_url": "https://github.com/sanjeevir/currency-converter-chrome-extension",

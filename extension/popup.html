@@ -3,6 +3,10 @@
 
 <head>
     <style>
+        body {
+            margin: 0;
+        }
+
         .disabled {
             opacity: 0.5;
             pointer-events:none;
@@ -11,13 +15,13 @@
         .container {
             min-width: 350px;
             border: 1px solid gray;
-            border-radius: 5px;
+            border-radius: 0 0 5px 5px;
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 10px;
         }
 
         .container h5 {
-            margin: -10px -10px 0;
+            margin: -10px -10px 10px;
             padding: 5px;
             line-height: 2em;
             text-align: center;
@@ -31,8 +35,38 @@
         }
 
         .container select {
-            width: 40%;
+            width: 30%;
             height: 25px;
+            padding: 5px;
+        }
+
+        .new-item {
+            cursor: pointer;
+            float: right;
+            
+        }
+
+        img.icon {
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        img.add-item {
+            height: 15px;
+            vertical-align: middle;
+        }
+
+        img.remove-item {
+            height: 20px;
+            vertical-align: text-bottom;
+        }
+
+        .small-margin {
+            margin: 0 5px;
+        }
+
+        .converter-line-item {
+            margin-bottom: 10px;
         }
     </style>
     <title>Currency Converter</title>
@@ -45,7 +79,7 @@
 <body>
 
     <div>
-        <section class="container disabled">
+        <!-- <section class="container disabled">
             <h5>Defaults</h5>
             <div>
                 <p class="label">Base Currency</p>
@@ -56,19 +90,36 @@
                 <select class="currencies-list" id="badge-target"></select>
             </div>
             <p>*this section is disabled for now. Badge defaulted to AUD to INR.</p>
-        </section>
+        </section> -->
         <section class="container">
-            <h5>Converter</h5>
-            <select class="currencies-list" id="from-currency"></select>
-            <span>to</span>
-            <select class="currencies-list" id="to-currency"></select>
-            <span>=</span>
-            <span id="result">???</span>
-            <span>
-                <a herf="#">-</a>
-                <a herf="#">+</a>
-            </span>
-            <p>*this section is being stylized yet. Look out for quick updates.</p>
+            <h5>
+                Currency Converter
+                <span id="new-item" class="new-item">
+                    <span>Add item</span>
+                    <img class="icon add-item" title="Add Item" src="img/add-item.png" />
+                </span>
+            </h5>
+            <secion id="default-item">
+                <div class="converter-line-item">
+                    <img class="icon remove-item" title="Remove Item" src="img/Trash_Can-512.png" />
+                    <select class="currencies-list" id="from-currency-0"></select>
+                    <span class="small-margin">to</span>
+                    <select class="currencies-list" id="to-currency-0"></select>
+                    <span class="small-margin">=</span>
+                    <span class="result">1</span>
+                </div>
+            </secion>
+            <p>*Badge defaulted to AUD to INR. Next update to retain state.</p>
+            <span id="template" style="display: none;">
+                <div class="converter-line-item">
+                    <img class="icon remove-item" title="Remove Item" src="img/Trash_Can-512.png" />
+                    <select class="currencies-list" id="from-currency-{}"></select>
+                    <span class="small-margin">to</span>
+                    <select class="currencies-list" id="to-currency-{}"></select>
+                    <span class="small-margin">=</span>
+                    <span class="result">1</span>
+                </div>
+            </template>
         </section>
     </div>
 
