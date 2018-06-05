@@ -1,5 +1,8 @@
 $(document).ready(function() {
-    var currenciesListElement = document.getElementsByClassName('currencies-list');
+    init();
+
+    // populate currencies list in dropdowns
+    let currenciesListElement = document.getElementsByClassName('currencies-list');
     for(var j = 0; j < currenciesListElement.length; j++) {
         for(var i = 0; i < CURRENCIES.length; i++) {
             var thisCurrency = document.createElement('option');
@@ -15,53 +18,61 @@ $(document).ready(function() {
         }
     }
 
-    /* $('#from-currency, #to-currency').change(function(){
-        if ($('#from-currency').val() != $('#to-currency').val()) {
-            var currencyQuery = $('#from-currency').val() + '_' + $('#to-currency').val();
-            axios.get('https://free.currencyconverterapi.com/api/v5/convert?q=' + currencyQuery + '&compact=ultra')
-            .then(function (response) {
-                console.log(response.data);
-                $('#result').text(parseFloat(response.data[currencyQuery]).toFixed(2));
-            }).catch(function (error) {
-                console.log(error);
-            });
-        } else {
-            $('#result').text("1");
-        }
-    }); */
-
-    $('body').on('change', 'select.currencies-list', function(event){
+    $('body').on('change', 'select.currencies-list', function(event) {
         $(event.target).parent('div').find('.result').text('...');
-        var currencyQuery = '';
+        let currencyLineItem = {};
+        let currencyQuery = '';
+        currencyLineItem.id = event.target.id.split('-')[2];
         if(event.target.id.indexOf('from-currency-') > -1) {
-            var anotherCurrency = $(this).parent('div').find('#to-currency-' + event.target.id.split('-')[2]);
+            let anotherCurrency = $(this).parent('div').find('#to-currency-' + event.target.id.split('-')[2]);
             currencyQuery = $(this).val() + '_' + $(anotherCurrency).val();
+            currencyLineItem.fromCurrency = $(this).val();
+            currencyLineItem.toCurrency = $(anotherCurrency).val();
         } else {
-            var anotherCurrency = $(this).parent('div').find('#from-currency-' + event.target.id.split('-')[2]);
+            let anotherCurrency = $(this).parent('div').find('#from-currency-' + event.target.id.split('-')[2]);
             currencyQuery = $(anotherCurrency).val() + '_' + $(this).val();
+            currencyLineItem.fromCurrency = $(anotherCurrency).val();
+            currencyLineItem.toCurrency = $(this).val();
         }
-        console.log(currencyQuery);
 
-        axios.get('https://free.currencyconverterapi.com/api/v5/convert?q=' + currencyQuery + '&compact=ultra')
-        .then(function (response) {
-            console.log(response.data);
-            $(event.target).parent('div').find('.result').text(response.data[currencyQuery].toFixed(2).toString());
-        }).catch(function (error) {
-            console.log(error);
-        });
+        findAndUpdateState(currencyLineItem);
+
+        console.log(currencyQuery);
+        fetchAndUpdateConversion(currencyQuery, $(event.target).parent('div').find('.result'));
     });
 
     $('#new-item').click(function() {
-        var templateCode = $('#template div').clone();
-        templateCode.find('select[id="from-currency-{}"]').attr('id', 'from-currency-' + $('#default-item div').length);
-        templateCode.find('select[id="to-currency-{}"]').attr('id', 'to-currency-' + $('#default-item div').length);
-        templateCode.find('span[id="result-{}"]').attr('id', 'result-' + $('#default-item div').length);
-        templateCode.appendTo('#default-item');
+        let currencyItemsCount = $('#currency-conversion-items div').length;
+        
+        let currencyLineItem = {};
+        currencyLineItem.id = currencyItemsCount;
+        currencyLineItem.fromCurrency = 'AED';
+        currencyLineItem.toCurrency = 'AED';
+
+        addCurrencyLineItem(currencyLineItem);
+        updateState(currencyLineItem);
     });
 
     $('body').on('click', 'img.remove-item', function(event) {
-        $(event.target).parent('div').remove();
+        let thisId = $(this).parent('div').attr('id');
+        chrome.storage.sync.get(['sCurrencyCoverterState'], function(result) {
+            for (var i in result.sCurrencyCoverterState) {
+                if(result.sCurrencyCoverterState[i].id == thisId) {
+                    result.sCurrencyCoverterState.remove(i);
+                    chrome.storage.sync.set({ sCurrencyCoverterState: result.sCurrencyCoverterState});
+                    $(this).parent('div').remove();
+                    break;
+                }
+            }
+        });
+
     });
+
+    $('#reset-items').click(function() {
+        chrome.storage.sync.remove('sCurrencyCoverterState', function() {
+            $('#currency-conversion-items div').remove();
+        });
+    })
 });
 
 var backgroundPage = chrome.extension.getBackgroundPage();

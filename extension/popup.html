@@ -73,6 +73,7 @@
     <script src="libs/jquery-3.3.1.min.js"></script>
     <script src="libs/axios.min.js"></script>
     <script src="js/constants.js"></script>
+    <script src="js/utils.js"></script>
     <script src="js/popup.js"></script>
 </head>
 
@@ -99,25 +100,16 @@
                     <img class="icon add-item" title="Add Item" src="img/add-item.png" />
                 </span>
             </h5>
-            <secion id="default-item">
-                <div class="converter-line-item">
-                    <img class="icon remove-item" title="Remove Item" src="img/Trash_Can-512.png" />
-                    <select class="currencies-list" id="from-currency-0"></select>
-                    <span class="small-margin">to</span>
-                    <select class="currencies-list" id="to-currency-0"></select>
-                    <span class="small-margin">=</span>
-                    <span class="result">1</span>
-                </div>
-            </secion>
-            <p>*Badge defaulted to AUD to INR. Next update to retain state.</p>
+            <secion id="currency-conversion-items"></secion>
+            <p>*Badge defaulted to AUD to INR. Next update for badge update / delete item. <a id="reset-items" href="#">Reset state.</a></p>
             <span id="template" style="display: none;">
-                <div class="converter-line-item">
-                    <img class="icon remove-item" title="Remove Item" src="img/Trash_Can-512.png" />
+                <div class="converter-line-item" id="{}">
+                    <!-- <img class="icon remove-item" title="Remove Item" src="img/Trash_Can-512.png" /> -->
                     <select class="currencies-list" id="from-currency-{}"></select>
                     <span class="small-margin">to</span>
                     <select class="currencies-list" id="to-currency-{}"></select>
                     <span class="small-margin">=</span>
-                    <span class="result">1</span>
+                    <span class="result" id="result-{}">1</span>
                 </div>
             </template>
         </section>
